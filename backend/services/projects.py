@@ -19,7 +19,7 @@ async def check_if_project_exists(project, db: Session, user_id: int):
         )
     return True
 
-#propably this function should by transported to services/task !
+#probably this function should by transported to services/task !
 async def delete_all_tasks(db: Session, project_id: int):
     db.exec(
         delete(Task).where(Task.project_id == project_id)
