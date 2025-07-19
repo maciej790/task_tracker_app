@@ -12,4 +12,8 @@ class Task_in(BaseModel):
     description: Optional[str]
     status: TaskStatus
     deadline: Optional[datetime]
-    priority: int
+    priority: int #1-3
+    color: str
+    
+class Task_out(Task_in):
+    id: int

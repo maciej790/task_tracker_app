@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from databse.config import create_db_and_tables
-from api.routers import auth, projects, tasks
+from api.routes import auth, projects, tasks
 
 app = FastAPI()
 
@@ -12,3 +12,7 @@ app.include_router(tasks.router)
 @app.on_event("startup")
 def on_startup():
     create_db_and_tables()
+    
+@app.get('/')
+async def app_startup():
+    return 'App is running!'

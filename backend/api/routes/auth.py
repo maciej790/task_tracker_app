@@ -4,6 +4,7 @@ from sqlmodel import Session
 from databse.config import get_session
 from services.auth import login_user, create_access_token
 from services.auth import get_current_user
+from services.exception import create_exception
 
 router = APIRouter()
 
@@ -19,7 +20,7 @@ async def login(
 ):
     user = login_user(form_data.username, form_data.password, db)
     if not user:
-        raise HTTPException(status_code=401, detail="Invalid username or password")
+        create_exception("Invalid username or password", 401)
     access_token = create_access_token(user.id, user.username)
     return {"access_token": access_token, "token_type": "bearer"}
 

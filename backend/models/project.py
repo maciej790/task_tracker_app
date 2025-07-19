@@ -1,15 +1,18 @@
-from sqlmodel import SQLModel, Field, Relationship
+from sqlmodel import Field, SQLModel, Relationship
 from typing import Optional, List, TYPE_CHECKING
+from datetime import datetime
 
 if TYPE_CHECKING:
     from .user import User
     from .task import Task
 
 class Project(SQLModel, table=True):
+    __tablename__ = "projects"
     id: Optional[int] = Field(default=None, primary_key=True)
-    name: str = Field(index=True)
-    description: Optional[str] = Field(default=None)
-    owner_id: int = Field(foreign_key="user.id")
+    name: str
+    description: str
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    user_id: int = Field(foreign_key="users.id")
 
-    owner: Optional["User"] = Relationship(back_populates="projects")
+    user: Optional["User"] = Relationship(back_populates="projects")
     tasks: List["Task"] = Relationship(back_populates="project")

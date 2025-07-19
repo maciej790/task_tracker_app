@@ -31,7 +31,7 @@ def create_access_token(id: int, username: str) -> str:
 
 def login_user(username: str, password: str, db: Session = Depends(get_session)) -> User | None:
     user = db.exec(select(User).where(User.username == username)).first()
-    if not user or not verify_password(password, user.hashed_password):
+    if not user or not verify_password(password, user.password):
         return None
     return user
 
